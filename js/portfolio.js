@@ -4,6 +4,11 @@ var viewBookLink = book.find('.bk-bookview');
 var viewBackLink = book.find('.bk-bookback');
 var changeColorLink = book.find('.change-color');
 var colorContainers = book.find('.color-container');
+var bbItem = book.find('.bb-item');
+var firstPage = book.find('first-page');
+
+
+
 
 var bookDefault = function(){
   book.data({ opened : false, flip : false })
@@ -34,6 +39,7 @@ viewBackLink.on('click', function(){
 
 viewBookLink.on('click', function(){
   bookInside();
+  changePageBg();
   return false;
 });
 
@@ -61,11 +67,19 @@ changeColorLink.click(function(){
 });
 
 var css = $("<style type='text/css'></style>").appendTo('head');
+ 
+var colormemory = '';
 
 colorContainers.find('.color-square').click(function(){
   var color = $(this).attr('class').match(/background-color-([a-f0-9]{6})/i)[1];
+  console.log(color);
   css.text('.highlight { color: #' + color + '; }');
+  return colormemory = color;
 });
+
+
+
+
 
 //Bookblock clone and setup
 var bookBlock = $('.bb-bookblock');
@@ -167,3 +181,9 @@ $(document).keydown(throttleFunc(function(e) {
       break;
   }
 }, 500, 2));
+
+var changePageBg = function(){
+   console.log('changed!');
+   console.log(colormemory);
+   css.text('.highlight { color: #' + colormemory + '; } .highlight-bg { background-color: #' + colormemory + '; }');
+}
